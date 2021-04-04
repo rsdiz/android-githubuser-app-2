@@ -16,8 +16,5 @@ interface UserDao {
     fun getUser(username: String): LiveData<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(users: List<User>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: User)
 }
