@@ -1,16 +1,16 @@
-package id.rosyid.exploregithubusers.network
+package id.rosyid.exploregithubusers.data.remote
 
 import id.rosyid.exploregithubusers.BuildConfig
-import id.rosyid.exploregithubusers.model.SearchUserResponse
-import id.rosyid.exploregithubusers.model.UserDetailResponse
-import id.rosyid.exploregithubusers.model.UserResponse
+import id.rosyid.exploregithubusers.data.entities.SearchUserResponse
+import id.rosyid.exploregithubusers.data.entities.UserDetailResponse
+import id.rosyid.exploregithubusers.data.entities.UserResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface GithubApi {
+interface GithubService {
     companion object {
         const val BASE_URL = "https://api.github.com/"
         const val TOKEN = BuildConfig.API_KEY

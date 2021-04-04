@@ -1,9 +1,10 @@
-package id.rosyid.exploregithubusers.model
+package id.rosyid.exploregithubusers.data.entities
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class UserDetailResponse(
+    val id: Long,
     val name: String?,
     @SerializedName("login") @Expose val username: String,
     @SerializedName("avatar_url") @Expose val avatarUrl: String,

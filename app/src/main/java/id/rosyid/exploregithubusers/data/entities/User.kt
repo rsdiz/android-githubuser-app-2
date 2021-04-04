@@ -1,10 +1,15 @@
-package id.rosyid.exploregithubusers.model
+package id.rosyid.exploregithubusers.data.entities
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
+@Entity(tableName = "user")
 @Parcelize
 data class User(
+    @PrimaryKey
+    val id: Long,
     val username: String,
     val avatarUrl: String,
     var name: String = "",
