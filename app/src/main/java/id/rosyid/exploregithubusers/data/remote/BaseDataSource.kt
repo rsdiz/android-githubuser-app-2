@@ -1,8 +1,8 @@
 package id.rosyid.exploregithubusers.data.remote
 
+import android.util.Log
 import id.rosyid.exploregithubusers.utils.Resource
 import retrofit2.Response
-import timber.log.Timber
 
 abstract class BaseDataSource {
     protected suspend fun <T> getResult(call: suspend () -> Response<T>): Resource<T> {
@@ -19,7 +19,7 @@ abstract class BaseDataSource {
     }
 
     private fun <T> error(message: String): Resource<T> {
-        Timber.d(message)
+        Log.d("RESOURCE", message)
         return Resource.error("Network call has failed for a following reason: $message")
     }
 }

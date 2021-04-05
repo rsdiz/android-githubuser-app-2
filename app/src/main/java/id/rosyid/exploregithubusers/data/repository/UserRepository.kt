@@ -6,18 +6,18 @@ import id.rosyid.exploregithubusers.utils.performGetOperation
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val remoteDataSource: UserRemoteDataSource,
+    private val userRemoteDataSource: UserRemoteDataSource,
     private val localDataSource: UserDao
 ) {
-    fun getUsers(username: String) = performGetOperation(
-        databaseQuery = { localDataSource.getUser(username) },
-        networkCall = { remoteDataSource.getUser(username) },
-        saveCallResult = { localDataSource.insert(it) }
+    fun getAllUsers() = performGetOperation(
+        databaseQuery = { localDataSource.getAllUsers() },
+        networkCall = { userRemoteDataSource.getAllUsers() },
+        saveCallResult = { localDataSource.insertAll(it) }
     )
 
-    fun getRandomUsers() = performGetOperation(
-        databaseQuery = { localDataSource.getAllUsers() },
-        networkCall = { remoteDataSource.getRandomUsers() },
-        saveCallResult = {}
+    fun getUser(username: String) = performGetOperation(
+        databaseQuery = { localDataSource.getUser(username) },
+        networkCall = { userRemoteDataSource.getUser(username) },
+        saveCallResult = { localDataSource.insert(it) }
     )
 }

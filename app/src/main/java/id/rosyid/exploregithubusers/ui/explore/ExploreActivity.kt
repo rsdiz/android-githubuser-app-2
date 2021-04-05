@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +32,7 @@ class ExploreActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
 
+        setSupportActionBar(binding.toolbar)
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
     }
@@ -47,10 +49,12 @@ class ExploreActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
+                    Log.d("ACTIONBAR", "onQueryTextSubmit: Triggered")
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
+                    Log.d("ACTIONBAR", "onQueryTextChange: Triggered")
                     return false
                 }
             }

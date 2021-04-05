@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import id.rosyid.exploregithubusers.data.entities.User
+import id.rosyid.exploregithubusers.data.entities.UserDetailResponse
+import id.rosyid.exploregithubusers.data.entities.UserResponse
 
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@Database(entities = [UserDetailResponse::class, UserResponse::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
+    abstract fun userDetailDao(): UserDetailDao
     abstract fun userDao(): UserDao
 
     companion object {
@@ -22,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
 
         private fun buildDatabase(appContext: Context) =
-            Room.databaseBuilder(appContext, AppDatabase::class.java, "user")
+            Room.databaseBuilder(appContext, AppDatabase::class.java, "explore_github")
                 .fallbackToDestructiveMigration()
                 .build()
     }

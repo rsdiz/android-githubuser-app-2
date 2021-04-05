@@ -4,4 +4,7 @@
     <string name="search_user">Search User</string>
     <string name="language_setting">Language Setting</string>
     <string name="search_hint">Type a username</string>
+    <string name="cd_avatar_github_user">Avatar from User</string>
+    <string name="label_name">Label Name</string>
+    <string name="label_username">Label Username</string>
 </resources>

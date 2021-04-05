@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/baseLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:contextClickable="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/ivAvatarUser"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:contentDescription="@string/cd_avatar_github_user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxWidth="250dp"
+        android:maxLines="2"
+        android:padding="8dp"
+        android:text="@string/label_name"
+        android:textColor="@color/blueSoft"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ivAvatarUser"
+        app:layout_constraintStart_toEndOf="@+id/ivAvatarUser"
+        app:layout_constraintTop_toTopOf="@+id/ivAvatarUser" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

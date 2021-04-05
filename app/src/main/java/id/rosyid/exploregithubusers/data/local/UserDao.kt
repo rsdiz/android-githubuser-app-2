@@ -5,16 +5,19 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import id.rosyid.exploregithubusers.data.entities.User
+import id.rosyid.exploregithubusers.data.entities.UserResponse
 
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user")
-    fun getAllUsers(): LiveData<List<User>>
+    fun getAllUsers(): LiveData<List<UserResponse>>
 
     @Query("SELECT * FROM user WHERE username = :username")
-    fun getUser(username: String): LiveData<User>
+    fun getUser(username: String): LiveData<UserResponse>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(user: User)
+    suspend fun insertAll(listUser: List<UserResponse>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(user: UserResponse)
 }

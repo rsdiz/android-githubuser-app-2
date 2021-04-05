@@ -2,7 +2,7 @@ package id.rosyid.exploregithubusers.data.remote
 
 import id.rosyid.exploregithubusers.BuildConfig
 import id.rosyid.exploregithubusers.data.entities.SearchUserResponse
-import id.rosyid.exploregithubusers.data.entities.User
+import id.rosyid.exploregithubusers.data.entities.UserDetailResponse
 import id.rosyid.exploregithubusers.data.entities.UserResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -22,7 +22,11 @@ interface GithubService {
 
     @GET("users/{username}")
     @Headers("Authorization: token $TOKEN")
-    suspend fun getUserDetail(@Path("username") username: String): Response<User>
+    suspend fun getUser(@Path("username") username: String): Response<UserResponse>
+
+    @GET("users/{username}")
+    @Headers("Authorization: token $TOKEN")
+    suspend fun getUserDetail(@Path("username") username: String): Response<UserDetailResponse>
 
     @GET("users/{username}/following")
     @Headers("Authorization: token $TOKEN")
