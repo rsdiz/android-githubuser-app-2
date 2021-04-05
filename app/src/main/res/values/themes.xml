@@ -19,4 +19,9 @@
         <item name="windowNoTitle">true</item>
         <item name="android:colorForeground">@color/white</item>
     </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">#EEEEEE</item>
+    </style>
 </resources>

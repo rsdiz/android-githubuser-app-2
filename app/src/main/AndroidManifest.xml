@@ -13,9 +13,13 @@
         android:theme="@style/Theme.ExploreGithubUsers">
         <activity
             android:theme="@style/Theme.ExploreGithubUsers.NoActionBar"
-            android:name=".ui.splashscreen.SplashActivity">
+            android:name=".ui.explore.ExploreActivity" />
+        <activity
+            android:name=".ui.splashscreen.SplashActivity"
+            android:theme="@style/Theme.ExploreGithubUsers.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
