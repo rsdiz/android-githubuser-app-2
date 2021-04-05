@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">Jelajahi Pengguna Github</string>
     <string name="app_version">Versi 1.0</string>
+    <string name="search_user">Cari Pengguna</string>
+    <string name="language_setting">Pengaturan Bahasa</string>
+    <string name="search_hint">Tulis nama pengguna</string>
 </resources>

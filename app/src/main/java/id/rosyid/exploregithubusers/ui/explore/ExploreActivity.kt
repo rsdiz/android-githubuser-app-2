@@ -1,7 +1,14 @@
 package id.rosyid.exploregithubusers.ui.explore
 
+import android.app.SearchManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -26,5 +33,39 @@ class ExploreActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.explore_menu, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu?.findItem(R.id.search)?.actionView as SearchView
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.queryHint = resources.getString(R.string.search_hint)
+        searchView.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+            }
+        )
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.language_settings -> {
+                val settingIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(settingIntent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

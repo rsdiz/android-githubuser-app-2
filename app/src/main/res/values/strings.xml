@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Explore Github Users</string>
     <string name="app_version">Version 1.0</string>
+    <string name="search_user">Search User</string>
+    <string name="language_setting">Language Setting</string>
+    <string name="search_hint">Type a username</string>
 </resources>
