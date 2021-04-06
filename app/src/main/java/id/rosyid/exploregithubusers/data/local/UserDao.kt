@@ -1,10 +1,7 @@
 package id.rosyid.exploregithubusers.data.local
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import id.rosyid.exploregithubusers.data.entities.UserResponse
 
 @Dao
@@ -20,4 +17,10 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: UserResponse)
+
+    @Query("SELECT * FROM user WHERE username LIKE :username")
+    fun searchUser(username: String): LiveData<List<UserResponse>>
+
+    @Query("DELETE FROM user")
+    suspend fun deleteAllUsers()
 }

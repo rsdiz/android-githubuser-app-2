@@ -33,6 +33,7 @@ object AppModule {
     @Provides
     fun provideGson(): Gson = GsonBuilder().create()
 
+    @Singleton
     @Provides
     fun provideGithubService(retrofit: Retrofit): GithubService = retrofit.create(GithubService::class.java)
 

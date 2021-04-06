@@ -16,11 +16,10 @@ class UsersAdapter(
         fun onClickedUser(username: String)
     }
 
-    private val items = ArrayList<UserResponse>()
+    private var items: List<UserResponse> = listOf()
 
     fun setItems(items: ArrayList<UserResponse>) {
-        this.items.clear()
-        this.items.addAll(items)
+        this.items = items
         notifyDataSetChanged()
     }
 

@@ -7,4 +7,5 @@ class UserRemoteDataSource @Inject constructor(
 ) : BaseDataSource() {
     suspend fun getAllUsers() = getResult { githubService.getUser() }
     suspend fun getUser(username: String) = getResult { githubService.getUser(username) }
+    suspend fun searchUser(username: String) = getResult { githubService.searchUsers(username) }
 }
