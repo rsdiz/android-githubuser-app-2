@@ -22,7 +22,6 @@ class UserRepository @Inject constructor(
     )
 
     fun searchUser(query: String) = performGetOperation(
-        databaseQuery = { localDataSource.searchUser(query) },
         networkCall = { userRemoteDataSource.searchUser(query) },
         saveCallResult = { localDataSource.insertAll(it.listUsers) }
     )

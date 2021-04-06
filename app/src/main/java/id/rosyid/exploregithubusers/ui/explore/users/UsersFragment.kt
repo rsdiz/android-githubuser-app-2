@@ -28,18 +28,18 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
     ): View {
         binding = UsersFragmentBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-        adapter = UsersAdapter(this)
-        setupObservers()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        setupObservers()
     }
 
     private fun setupRecyclerView() {
         binding.rvListUsers.let {
+            adapter = UsersAdapter(this)
             it.setHasFixedSize(true)
             it.layoutManager = LinearLayoutManager(requireContext())
             val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)

@@ -3,9 +3,7 @@ package id.rosyid.exploregithubusers.ui.explore.users
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
-import androidx.viewbinding.ViewBinding
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.rosyid.exploregithubusers.data.entities.UserResponse
 import id.rosyid.exploregithubusers.data.repository.UserRepository
 import id.rosyid.exploregithubusers.utils.Resource
 import javax.inject.Inject
@@ -48,9 +46,9 @@ class UsersViewModel @Inject constructor(
                 Resource.Status.SUCCESS -> {
                     Log.d(
                         "RESULT_SEARCH",
-                        "searchObservers: Success: ${it.data?.size}"
+                        "searchObservers: Success: ${it.data?.totalResults}"
                     )
-                    adapter.setItems((it.data as ArrayList<UserResponse>?)!!)
+                    adapter.setItems(it.data?.listUsers!!)
                     searchUsers(searchQuery).removeObservers(lifecycleOwner)
                 }
                 Resource.Status.ERROR -> {

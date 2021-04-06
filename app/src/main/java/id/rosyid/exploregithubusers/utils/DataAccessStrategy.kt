@@ -22,3 +22,19 @@ fun <T, U> performGetOperation(
             emitSource(source)
         }
     }
+
+fun <T> performGetOperation(
+    networkCall: suspend () -> Resource<T>,
+    saveCallResult: suspend (T) -> Unit
+): LiveData<Resource<T>> =
+    liveData(Dispatchers.IO) {
+        emit(Resource.loading())
+
+        val responseStatus = networkCall.invoke()
+        if (responseStatus.status == Resource.Status.SUCCESS) {
+            emit(Resource.success(responseStatus.data!!))
+            saveCallResult(responseStatus.data)
+        } else if (responseStatus.status == Resource.Status.ERROR) {
+            emit(Resource.error(responseStatus.message!!))
+        }
+    }
