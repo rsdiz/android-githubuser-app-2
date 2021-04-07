@@ -73,9 +73,11 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
             when (status) {
                 Resource.Status.SUCCESS -> {
                     Log.d("OBSERVER", "setupObservers: Success: ${data?.size}")
-                    if (!data.isNullOrEmpty()) adapter.setItems(ArrayList(data))
-                    showLoading(false)
-                    viewModel.removeUsersObserver(viewLifecycleOwner)
+                    if (!data.isNullOrEmpty()) {
+                        adapter.setItems(ArrayList(data))
+                        showLoading(false)
+                        viewModel.removeUsersObserver(viewLifecycleOwner)
+                    }
                 }
                 Resource.Status.ERROR -> {
                     showError(true)
@@ -140,7 +142,7 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
                                         "RESULT_SEARCH",
                                         "searchObservers: Success: ${data?.size}"
                                     )
-                                    adapter.setItems(ArrayList(data!!))
+                                    if (!data.isNullOrEmpty()) adapter.setItems(ArrayList(data))
                                     showLoading(false)
                                     viewModel.removeSearchUsersObserver(viewLifecycleOwner, query)
                                 }

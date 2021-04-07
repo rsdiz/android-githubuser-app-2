@@ -25,4 +25,5 @@
     <string name="error">Error Ocurred</string>
     <string name="title_follower">Follower</string>
     <string name="title_following">Following</string>
+    <string name="default_user">rsdiz</string>
 </resources>

@@ -43,6 +43,7 @@ class UserDetailFragment : Fragment() {
     private val viewModel: UserDetailViewModel by viewModels()
     private lateinit var baseActivity: AppCompatActivity
     private lateinit var navHostFragment: NavHostFragment
+    private lateinit var dataUsername: String
 
     companion object {
         @StringRes
@@ -58,8 +59,16 @@ class UserDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = UserDetailFragmentBinding.inflate(inflater, container, false)
-
+        dataUsername = UserDetailFragmentArgs.fromBundle(arguments as Bundle).username
         baseActivity = activity as AppCompatActivity
+
+        setAppBar()
+        setTabLayout()
+
+        return binding.root
+    }
+
+    private fun setAppBar() {
         navHostFragment = baseActivity.supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
@@ -67,21 +76,18 @@ class UserDetailFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
+    }
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(baseActivity)
+    private fun setTabLayout() {
+        val sectionsPagerAdapter = SectionsPagerAdapter(baseActivity, dataUsername)
         binding.viewPagerLayout.adapter = sectionsPagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPagerLayout) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
-
-        baseActivity.supportActionBar?.elevation = 0f
-
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val dataUsername = UserDetailFragmentArgs.fromBundle(arguments as Bundle).username
         setupObservers(dataUsername)
     }
 
@@ -200,11 +206,11 @@ class UserDetailFragment : Fragment() {
     }
 }
 
-class SectionsPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
+class SectionsPagerAdapter(activity: AppCompatActivity, private val username: String) : FragmentStateAdapter(activity) {
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> FollowFragment.newInstance(FollowFragment.Type.FOLLOWER)
-            1 -> FollowFragment.newInstance(FollowFragment.Type.FOLLOWING)
+            0 -> FollowFragment.newInstance(FollowFragment.Type.FOLLOWER, username)
+            1 -> FollowFragment.newInstance(FollowFragment.Type.FOLLOWING, username)
             else -> throw IllegalArgumentException()
         }
     }

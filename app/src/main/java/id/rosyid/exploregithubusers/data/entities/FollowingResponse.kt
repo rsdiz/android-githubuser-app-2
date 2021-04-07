@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "user")
-data class UserResponse(
+@Entity(tableName = "following")
+data class FollowingResponse(
     @PrimaryKey val id: Long,
     @SerializedName("avatar_url") @Expose val avatarUrl: String,
     @SerializedName("login") @Expose val username: String

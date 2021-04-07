@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@id/app_bar"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/chris_gannon"
+        app:lottie_rawRes="@raw/sleeping_404"
         app:lottie_renderMode="automatic" />
 
     <TextView

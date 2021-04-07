@@ -8,9 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import id.rosyid.exploregithubusers.data.local.AppDatabase
-import id.rosyid.exploregithubusers.data.local.UserDao
-import id.rosyid.exploregithubusers.data.local.UserDetailDao
+import id.rosyid.exploregithubusers.data.local.*
 import id.rosyid.exploregithubusers.data.remote.GithubService
 import id.rosyid.exploregithubusers.data.remote.UserDetailRemoteDataSource
 import id.rosyid.exploregithubusers.data.remote.UserRemoteDataSource
@@ -59,6 +57,14 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideFollowersDao(database: AppDatabase) = database.followersDao()
+
+    @Singleton
+    @Provides
+    fun provideFollowingDao(database: AppDatabase) = database.followingDao()
+
+    @Singleton
+    @Provides
     fun provideUserDetailRepository(
         userDetailRemoteDataSource: UserDetailRemoteDataSource,
         localDataSource: UserDetailDao
@@ -68,6 +74,8 @@ object AppModule {
     @Provides
     fun provideUserRepository(
         userRemoteDataSource: UserRemoteDataSource,
-        localDataSource: UserDao
-    ) = UserRepository(userRemoteDataSource, localDataSource)
+        userLocalDataSource: UserDao,
+        followersLocalDataSource: FollowersDao,
+        followingLocalDataSource: FollowingDao
+    ) = UserRepository(userRemoteDataSource, userLocalDataSource, followersLocalDataSource, followingLocalDataSource)
 }

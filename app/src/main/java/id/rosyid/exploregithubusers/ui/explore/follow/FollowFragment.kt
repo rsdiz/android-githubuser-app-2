@@ -9,8 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.rosyid.exploregithubusers.R
+import id.rosyid.exploregithubusers.data.entities.FollowersResponse
+import id.rosyid.exploregithubusers.data.entities.FollowingResponse
 import id.rosyid.exploregithubusers.databinding.FollowFragmentBinding
-import id.rosyid.exploregithubusers.ui.explore.users.UsersAdapter
+import id.rosyid.exploregithubusers.utils.Resource
 import id.rosyid.exploregithubusers.utils.autoCleared
 
 @AndroidEntryPoint
@@ -18,7 +21,7 @@ class FollowFragment : Fragment() {
 
     private var binding: FollowFragmentBinding by autoCleared()
     private val viewModel: FollowViewModel by viewModels()
-    private lateinit var adapter: UsersAdapter
+    private lateinit var adapter: Any
 
     enum class Type {
         FOLLOWER,
@@ -26,13 +29,15 @@ class FollowFragment : Fragment() {
     }
 
     companion object {
-        private const val ARG_PAGE_TYPE = "page_type"
+        const val ARG_PAGE_TYPE = "page_type"
+        const val ARG_USERNAME = "username"
 
         @JvmStatic
-        fun newInstance(type: Type) =
+        fun newInstance(type: Type, username: String) =
             FollowFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_PAGE_TYPE, type.ordinal)
+                    putString(ARG_USERNAME, username)
                 }
             }
     }
@@ -53,8 +58,11 @@ class FollowFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
+        when (requireArguments().getInt(ARG_PAGE_TYPE)) {
+            Type.FOLLOWER.ordinal -> adapter = FollowersAdapter()
+            Type.FOLLOWING.ordinal -> adapter = FollowingAdapter()
+        }
         binding.recyclerView.let {
-            adapter = UsersAdapter()
             it.setHasFixedSize(true)
             it.layoutManager = LinearLayoutManager(requireContext())
             val divider = DividerItemDecoration(
@@ -62,10 +70,101 @@ class FollowFragment : Fragment() {
                 LinearLayoutManager.HORIZONTAL
             )
             it.addItemDecoration(divider)
-            it.adapter = adapter
+            when (requireArguments().getInt(ARG_PAGE_TYPE)) {
+                Type.FOLLOWER.ordinal -> it.adapter = (adapter as FollowersAdapter)
+                Type.FOLLOWING.ordinal -> it.adapter = (adapter as FollowingAdapter)
+            }
         }
     }
 
     private fun setupObservers() {
+        val type = arguments?.getInt(ARG_PAGE_TYPE)
+        val username = requireArguments().getString(ARG_USERNAME, resources.getString(R.string.default_user))
+        when (type) {
+            Type.FOLLOWER.ordinal -> {
+                viewModel.followersObserver(viewLifecycleOwner, username) { data, status ->
+                    onFollowersObserverFinish(data, status)
+                    if (status == Resource.Status.SUCCESS)
+                        viewModel.removeFollowersObserver(viewLifecycleOwner, username)
+                }
+            }
+            Type.FOLLOWING.ordinal -> {
+                viewModel.followingObserver(viewLifecycleOwner, username) { data, status ->
+                    onFollowingObserverFinish(data, status)
+                    if (status == Resource.Status.SUCCESS)
+                        viewModel.removeFollowingObserver(viewLifecycleOwner, username)
+                }
+            }
+        }
+    }
+
+    private fun onFollowersObserverFinish(data: List<FollowersResponse>?, status: Resource.Status) {
+        when (status) {
+            Resource.Status.SUCCESS -> {
+                if (!data.isNullOrEmpty()) (adapter as FollowersAdapter).setItems(ArrayList(data))
+                showLoading(false)
+            }
+            Resource.Status.ERROR -> {
+                showError(true)
+            }
+            Resource.Status.LOADING -> {
+                showLoading(true)
+            }
+        }
+    }
+
+    private fun onFollowingObserverFinish(data: List<FollowingResponse>?, status: Resource.Status) {
+        when (status) {
+            Resource.Status.SUCCESS -> {
+                if (!data.isNullOrEmpty()) (adapter as FollowingAdapter).setItems(ArrayList(data))
+                showLoading(false)
+            }
+            Resource.Status.ERROR -> {
+                showError(true)
+            }
+            Resource.Status.LOADING -> {
+                showLoading(true)
+            }
+        }
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.apply {
+                loadingAnimation.visibility = View.VISIBLE
+                loadingText.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+                errorAnimation.visibility = View.GONE
+                errorText.visibility = View.GONE
+            }
+        } else {
+            binding.apply {
+                loadingAnimation.visibility = View.GONE
+                loadingText.visibility = View.GONE
+                errorAnimation.visibility = View.GONE
+                errorText.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun showError(state: Boolean) {
+        if (state) {
+            binding.apply {
+                errorAnimation.visibility = View.VISIBLE
+                errorText.visibility = View.VISIBLE
+                loadingAnimation.visibility = View.GONE
+                loadingText.visibility = View.GONE
+                recyclerView.visibility = View.GONE
+            }
+        } else {
+            binding.apply {
+                errorAnimation.visibility = View.GONE
+                errorText.visibility = View.GONE
+                recyclerView.visibility = View.GONE
+                loadingAnimation.visibility = View.VISIBLE
+                loadingText.visibility = View.VISIBLE
+            }
+        }
     }
 }

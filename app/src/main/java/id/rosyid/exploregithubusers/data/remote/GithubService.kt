@@ -2,9 +2,7 @@ package id.rosyid.exploregithubusers.data.remote
 
 import android.database.Observable
 import id.rosyid.exploregithubusers.BuildConfig
-import id.rosyid.exploregithubusers.data.entities.SearchUserResponse
-import id.rosyid.exploregithubusers.data.entities.UserDetailResponse
-import id.rosyid.exploregithubusers.data.entities.UserResponse
+import id.rosyid.exploregithubusers.data.entities.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -31,11 +29,11 @@ interface GithubService {
 
     @GET("users/{username}/following")
     @Headers("Authorization: token $TOKEN")
-    suspend fun getFollowingUser(@Path("username") username: String): Response<ArrayList<UserResponse>>
+    suspend fun getFollowingUser(@Path("username") username: String): Response<ArrayList<FollowingResponse>>
 
     @GET("users/{username}/followers")
     @Headers("Authorization: token $TOKEN")
-    suspend fun getFollowersUser(@Path("username") username: String): Response<ArrayList<UserResponse>>
+    suspend fun getFollowersUser(@Path("username") username: String): Response<ArrayList<FollowersResponse>>
 
     @GET("search/users")
     @Headers("Authorization: token $TOKEN")
