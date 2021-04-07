@@ -7,4 +7,20 @@
     <string name="cd_avatar_github_user">Avatar from User</string>
     <string name="label_name">Label Name</string>
     <string name="label_username">Label Username</string>
+    <string name="share">Share</string>
+    <string name="label_followers">Followers :</string>
+    <string name="value_followers">Value Followers</string>
+    <string name="label_followings">Followings :</string>
+    <string name="value_followings">Value Followings</string>
+    <string name="value_company">Company Name</string>
+    <string name="label_company">Company : </string>
+    <string name="label_location">Location : </string>
+    <string name="value_location">Location Name</string>
+    <string name="label_repository">Repositories : </string>
+    <string name="value_repository">Value Repository</string>
+    <string name="cd_total_followers_and_following">Total Followers and Following</string>
+    <string name="detail_users_title">Detail User</string>
+    <string name="loading">Loading</string>
+    <string name="empty_value" translatable="false">-</string>
+    <string name="error">Error Ocurred</string>
 </resources>

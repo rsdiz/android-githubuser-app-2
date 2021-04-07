@@ -4,9 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +33,16 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
         savedInstanceState: Bundle?
     ): View {
         binding = UsersFragmentBinding.inflate(inflater, container, false)
+
+        val baseActivity = activity as AppCompatActivity
+        val navHostFragment: NavHostFragment =
+            baseActivity.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController: NavController = navHostFragment.navController
+        baseActivity.setSupportActionBar(binding.toolbar)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -49,7 +64,7 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
     }
 
     private fun setupObservers() {
-        viewModel.usersObserver(viewLifecycleOwner, adapter)
+        if (view != null) viewModel.usersObserver(viewLifecycleOwner, adapter)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -78,8 +93,6 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
                 }
             }
         )
-
-        return super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -99,5 +112,7 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
     override fun onMenuItemActionExpand(item: MenuItem?): Boolean = true
 
     override fun onClickedUser(username: String) {
+        val toDetail = UsersFragmentDirections.actionUsersFragmentToUserDetailFragment(username)
+        view?.findNavController()?.navigate(toDetail)
     }
 }

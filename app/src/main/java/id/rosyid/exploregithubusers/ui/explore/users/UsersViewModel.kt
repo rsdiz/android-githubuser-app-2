@@ -31,6 +31,7 @@ class UsersViewModel @Inject constructor(
                     Log.d("OBSERVER", "Error: ${it.message}")
                 }
                 Resource.Status.LOADING -> {
+                    println("SEARCHING...")
                 }
             }
         }

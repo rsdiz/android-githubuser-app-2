@@ -11,7 +11,7 @@ class UserDetailRepository @Inject constructor(
 ) {
     fun getUserDetail(username: String) = performGetOperation(
         databaseQuery = { localDataSource.getUserDetail(username) },
-        networkCall = { userDetailRemoteDataSource.getDetailUser(username) },
+        networkCall = { userDetailRemoteDataSource.getUserDetail(username) },
         saveCallResult = { localDataSource.insert(it) }
     )
 }
