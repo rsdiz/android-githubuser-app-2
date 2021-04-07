@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.rosyid.exploregithubusers.data.entities.UserResponse
 import id.rosyid.exploregithubusers.data.repository.UserRepository
 import id.rosyid.exploregithubusers.utils.Resource
 import javax.inject.Inject
@@ -18,47 +19,23 @@ class UsersViewModel @Inject constructor(
 
     fun usersObserver(
         lifecycleOwner: LifecycleOwner,
-        adapter: UsersAdapter
-    ) {
-        users.observe(lifecycleOwner) {
-            when (it.status) {
-                Resource.Status.SUCCESS -> {
-                    Log.d("OBSERVER", "setupObservers: Success: ${it.data?.size}")
-                    if (!it.data.isNullOrEmpty()) adapter.setItems(ArrayList(it.data))
-                    users.removeObservers(lifecycleOwner)
-                }
-                Resource.Status.ERROR -> {
-                    Log.d("OBSERVER", "Error: ${it.message}")
-                }
-                Resource.Status.LOADING -> {
-                    println("SEARCHING...")
-                }
-            }
-        }
-    }
+        bind: (List<UserResponse>?, Resource.Status, String?) -> Unit
+    ) = users.observe(lifecycleOwner) { bind(it.data, it.status, it.message) }
+
+    fun removeUsersObserver(
+        lifecycleOwner: LifecycleOwner
+    ) = users.removeObservers(lifecycleOwner)
 
     fun searchObserver(
         lifecycleOwner: LifecycleOwner,
-        adapter: UsersAdapter,
-        searchQuery: String
-    ) {
-        searchUsers(searchQuery).observe(lifecycleOwner) {
-            when (it.status) {
-                Resource.Status.SUCCESS -> {
-                    Log.d(
-                        "RESULT_SEARCH",
-                        "searchObservers: Success: ${it.data?.totalResults}"
-                    )
-                    adapter.setItems(it.data?.listUsers!!)
-                    searchUsers(searchQuery).removeObservers(lifecycleOwner)
-                }
-                Resource.Status.ERROR -> {
-                    Log.d("OBSERVER", "Error: ${it.message}")
-                }
-                Resource.Status.LOADING -> {
-                    println("SEARCHING...")
-                }
-            }
-        }
+        searchQuery: String,
+        bind: (List<UserResponse>?, Resource.Status, String?) -> Unit
+    ) = searchUsers(searchQuery).observe(lifecycleOwner) {
+        bind(it.data?.listUsers, it.status, it.message)
     }
+
+    fun removeSearchUsersObserver(
+        lifecycleOwner: LifecycleOwner,
+        searchQuery: String,
+    ) = searchUsers(searchQuery).removeObservers(lifecycleOwner)
 }

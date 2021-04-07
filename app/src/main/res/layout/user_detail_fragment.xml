@@ -54,11 +54,12 @@
                     android:id="@+id/error_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginVertical="24dp"
                     android:fontFamily="@font/monda"
                     android:text="@string/error"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/loading_animation"
                     app:layout_constraintStart_toStartOf="@+id/loading_animation"
                     app:layout_constraintTop_toBottomOf="@+id/loading_animation" />
@@ -87,11 +88,12 @@
                     android:id="@+id/loading_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginVertical="24dp"
                     android:fontFamily="@font/monda"
                     android:text="@string/loading"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/loading_animation"
                     app:layout_constraintStart_toStartOf="@+id/loading_animation"
                     app:layout_constraintTop_toBottomOf="@+id/loading_animation" />
@@ -267,6 +269,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         <androidx.appcompat.widget.Toolbar
@@ -283,9 +286,16 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blueSoft"
-            app:tabTextColor="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:tabBackground="@color/blackElegant"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/blueSoft"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorGravity="bottom"
+            app:tabIndicatorHeight="4dp"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -306,8 +316,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:contentDescription="@string/share"
         android:backgroundTint="@color/white"
+        android:contentDescription="@string/share"
         android:src="@drawable/ic_baseline_share_24"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end" />

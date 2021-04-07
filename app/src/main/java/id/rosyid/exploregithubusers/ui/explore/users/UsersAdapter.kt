@@ -10,7 +10,7 @@ import id.rosyid.exploregithubusers.data.entities.UserResponse
 import id.rosyid.exploregithubusers.databinding.RowItemUserBinding
 
 class UsersAdapter(
-    private val listener: UserItemListener
+    private val listener: UserItemListener? = null
 ) : RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
     interface UserItemListener {
         fun onClickedUser(username: String)
@@ -34,7 +34,7 @@ class UsersAdapter(
 
     inner class UsersViewHolder(
         private val binding: RowItemUserBinding,
-        private val listener: UserItemListener
+        private val listener: UserItemListener?
     ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         private lateinit var user: UserResponse
 
@@ -54,7 +54,7 @@ class UsersAdapter(
         }
 
         override fun onClick(v: View?) {
-            listener.onClickedUser(user.username)
+            listener?.onClickedUser(user.username)
         }
     }
 }

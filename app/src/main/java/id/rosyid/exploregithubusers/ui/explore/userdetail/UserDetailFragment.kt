@@ -11,23 +11,29 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.*
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import id.rosyid.exploregithubusers.R
 import id.rosyid.exploregithubusers.data.entities.UserDetailResponse
 import id.rosyid.exploregithubusers.databinding.UserDetailFragmentBinding
+import id.rosyid.exploregithubusers.ui.explore.follow.FollowFragment
 import id.rosyid.exploregithubusers.utils.Resource
 import id.rosyid.exploregithubusers.utils.autoCleared
+import java.lang.IllegalArgumentException
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -37,6 +43,14 @@ class UserDetailFragment : Fragment() {
     private val viewModel: UserDetailViewModel by viewModels()
     private lateinit var baseActivity: AppCompatActivity
     private lateinit var navHostFragment: NavHostFragment
+
+    companion object {
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.title_follower,
+            R.string.title_following
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +67,14 @@ class UserDetailFragment : Fragment() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
+
+        val sectionsPagerAdapter = SectionsPagerAdapter(baseActivity)
+        binding.viewPagerLayout.adapter = sectionsPagerAdapter
+        TabLayoutMediator(binding.tabLayout, binding.viewPagerLayout) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
+
+        baseActivity.supportActionBar?.elevation = 0f
 
         return binding.root
     }
@@ -176,4 +198,16 @@ class UserDetailFragment : Fragment() {
             }
         )
     }
+}
+
+class SectionsPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
+    override fun createFragment(position: Int): Fragment {
+        return when (position) {
+            0 -> FollowFragment.newInstance(FollowFragment.Type.FOLLOWER)
+            1 -> FollowFragment.newInstance(FollowFragment.Type.FOLLOWING)
+            else -> throw IllegalArgumentException()
+        }
+    }
+
+    override fun getItemCount(): Int = 2
 }

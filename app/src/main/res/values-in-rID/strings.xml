@@ -23,4 +23,6 @@
     <string name="detail_users_title">Detail Pengguna</string>
     <string name="loading">Memuat</string>
     <string name="error">Terjadi Kesalahan</string>
+    <string name="title_follower">Pengikut</string>
+    <string name="title_following">Mengikuti</string>
 </resources>

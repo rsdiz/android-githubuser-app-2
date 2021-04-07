@@ -3,6 +3,7 @@ package id.rosyid.exploregithubusers.ui.explore.users
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.rosyid.exploregithubusers.R
 import id.rosyid.exploregithubusers.databinding.UsersFragmentBinding
+import id.rosyid.exploregithubusers.utils.Resource
 import id.rosyid.exploregithubusers.utils.autoCleared
 
 @AndroidEntryPoint
@@ -57,14 +59,64 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
             adapter = UsersAdapter(this)
             it.setHasFixedSize(true)
             it.layoutManager = LinearLayoutManager(requireContext())
-            val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+            val divider = DividerItemDecoration(
+                it.context,
+                LinearLayoutManager.HORIZONTAL
+            )
             it.addItemDecoration(divider)
             it.adapter = adapter
         }
     }
 
     private fun setupObservers() {
-        if (view != null) viewModel.usersObserver(viewLifecycleOwner, adapter)
+        viewModel.usersObserver(viewLifecycleOwner) { data, status, _ ->
+            when (status) {
+                Resource.Status.SUCCESS -> {
+                    Log.d("OBSERVER", "setupObservers: Success: ${data?.size}")
+                    if (!data.isNullOrEmpty()) adapter.setItems(ArrayList(data))
+                    showLoading(false)
+                    viewModel.removeUsersObserver(viewLifecycleOwner)
+                }
+                Resource.Status.ERROR -> {
+                    showError(true)
+                }
+                Resource.Status.LOADING -> {
+                    showLoading(true)
+                }
+            }
+        }
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.apply {
+                layoutLoading.visibility = View.VISIBLE
+                rvListUsers.visibility = View.GONE
+                layoutError.visibility = View.GONE
+            }
+        } else {
+            binding.apply {
+                layoutLoading.visibility = View.GONE
+                layoutError.visibility = View.GONE
+                rvListUsers.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun showError(state: Boolean) {
+        if (state) {
+            binding.apply {
+                layoutError.visibility = View.VISIBLE
+                layoutLoading.visibility = View.GONE
+                rvListUsers.visibility = View.GONE
+            }
+        } else {
+            binding.apply {
+                layoutError.visibility = View.GONE
+                rvListUsers.visibility = View.GONE
+                layoutLoading.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -80,7 +132,26 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
         searchView.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-                    if (!query.isNullOrBlank()) viewModel.searchObserver(viewLifecycleOwner, adapter, query)
+                    if (!query.isNullOrBlank())
+                        viewModel.searchObserver(viewLifecycleOwner, query) { data, status, _ ->
+                            when (status) {
+                                Resource.Status.SUCCESS -> {
+                                    Log.d(
+                                        "RESULT_SEARCH",
+                                        "searchObservers: Success: ${data?.size}"
+                                    )
+                                    adapter.setItems(ArrayList(data!!))
+                                    showLoading(false)
+                                    viewModel.removeSearchUsersObserver(viewLifecycleOwner, query)
+                                }
+                                Resource.Status.ERROR -> {
+                                    showError(true)
+                                }
+                                Resource.Status.LOADING -> {
+                                    showLoading(true)
+                                }
+                            }
+                        }
                     return true
                 }
 
