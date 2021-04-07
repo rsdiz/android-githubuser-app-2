@@ -131,6 +131,7 @@ class UserDetailFragment : Fragment() {
                         userTwitter.text = userDetailResponse.twitterUsername ?: getString(R.string.empty_value)
                     }
 
+                    showShareIcon(true)
                     showLoading(false)
 
                     viewModel.removeUserDetailObserver(
@@ -138,9 +139,20 @@ class UserDetailFragment : Fragment() {
                     )
                 }
             }
-            Resource.Status.ERROR -> showError(true)
-            Resource.Status.LOADING -> showLoading(true)
+            Resource.Status.ERROR -> {
+                showShareIcon(false)
+                showError(true)
+            }
+            Resource.Status.LOADING -> {
+                showShareIcon(false)
+                showLoading(true)
+            }
         }
+    }
+
+    private fun showShareIcon(state: Boolean) {
+        if (state) binding.fabShare.visibility = View.VISIBLE
+        else binding.fabShare.visibility = View.GONE
     }
 
     private fun showLoading(state: Boolean) {

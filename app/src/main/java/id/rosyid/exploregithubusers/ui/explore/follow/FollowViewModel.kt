@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.rosyid.exploregithubusers.data.entities.FollowersResponse
 import id.rosyid.exploregithubusers.data.entities.FollowingResponse
-import id.rosyid.exploregithubusers.data.entities.UserResponse
 import id.rosyid.exploregithubusers.data.repository.UserRepository
 import id.rosyid.exploregithubusers.utils.Resource
 import javax.inject.Inject

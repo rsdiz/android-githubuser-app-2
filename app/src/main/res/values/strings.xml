@@ -18,11 +18,10 @@
     <string name="value_location">Location Name</string>
     <string name="label_repository">Repositories : </string>
     <string name="value_repository">Value Repository</string>
-    <string name="cd_total_followers_and_following">Total Followers and Following</string>
     <string name="detail_users_title">Detail User</string>
     <string name="loading">Loading</string>
     <string name="empty_value" translatable="false">" - "</string>
-    <string name="error">Error Ocurred</string>
+    <string name="error">Error Occurred</string>
     <string name="title_follower">Follower</string>
     <string name="title_following">Following</string>
     <string name="default_user" translatable="false">rsdiz</string>

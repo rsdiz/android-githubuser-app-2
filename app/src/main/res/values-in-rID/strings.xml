@@ -19,7 +19,6 @@
     <string name="value_location">Nama lokasi</string>
     <string name="label_repository">Repositori</string>
     <string name="value_repository">Total repositori</string>
-    <string name="cd_total_followers_and_following">Jumlah Pengikut dan Mengikuti</string>
     <string name="detail_users_title">Detail Pengguna</string>
     <string name="loading">Memuat</string>
     <string name="error">Terjadi Kesalahan</string>
