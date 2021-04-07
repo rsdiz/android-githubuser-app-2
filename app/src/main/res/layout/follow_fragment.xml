@@ -4,10 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
+    android:gravity="top|center"
     android:nestedScrollingEnabled="false"
     android:orientation="vertical"
     tools:context=".ui.explore.follow.FollowFragment">
+
+    <TextView
+        android:id="@+id/error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/monda"
+        android:text="@string/error"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/error_animation"
@@ -20,12 +31,12 @@
         app:lottie_renderMode="automatic" />
 
     <TextView
-        android:id="@+id/error_text"
+        android:id="@+id/loading_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/monda"
-        android:text="@string/error"
+        android:text="@string/loading"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -41,12 +52,13 @@
         app:lottie_renderMode="automatic" />
 
     <TextView
-        android:id="@+id/loading_text"
+        android:id="@+id/nodata_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/monda"
-        android:text="@string/loading"
+        android:text="@string/nodata_following"
+        android:visibility="gone"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -61,18 +73,6 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/sleeping_404"
         app:lottie_renderMode="automatic" />
-
-    <TextView
-        android:id="@+id/nodata_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/monda"
-        android:text="@string/nodata_following"
-        android:visibility="gone"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

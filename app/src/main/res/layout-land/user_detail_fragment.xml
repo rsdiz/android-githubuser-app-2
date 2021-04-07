@@ -121,16 +121,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginHorizontal="8dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/label_name"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/user_image"
-                    app:layout_constraintTop_toTopOf="@+id/user_image" />
+                    app:layout_constraintEnd_toEndOf="@+id/user_image"
+                    app:layout_constraintStart_toStartOf="@+id/user_image"
+                    app:layout_constraintTop_toBottomOf="@+id/user_image" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/user_username"
@@ -143,20 +142,35 @@
                     android:textColor="@color/whiteSoft"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/user_name"
-                    app:layout_constraintStart_toStartOf="@+id/user_name"
+                    app:layout_constraintEnd_toEndOf="@+id/user_image"
+                    app:layout_constraintStart_toStartOf="@+id/user_image"
                     app:layout_constraintTop_toBottomOf="@+id/user_name" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/user_bio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="36dp"
+                    android:maxWidth="400dp"
+                    android:padding="8dp"
+                    android:text="@string/label_bio"
+                    android:textAlignment="center"
+                    android:textColor="@color/whiteSoft"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/user_image"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TableLayout
                     android:id="@+id/table_detail_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/user_username"
-                    app:layout_constraintStart_toStartOf="@+id/user_username"
-                    app:layout_constraintTop_toBottomOf="@+id/user_username">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/user_image"
+                    app:layout_constraintTop_toBottomOf="@+id/user_bio">
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -259,6 +273,69 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/value_repository"
+                            android:textAlignment="viewEnd" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="4dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_blog"
+                            android:textAlignment="viewStart" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/user_blog"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/value_blog"
+                            android:textAlignment="viewEnd" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="4dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_email"
+                            android:textAlignment="viewStart" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/user_email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/value_email"
+                            android:textAlignment="viewEnd" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="4dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/label_twitter"
+                            android:textAlignment="viewStart" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/user_twitter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/value_twitter"
                             android:textAlignment="viewEnd" />
 
                     </TableRow>

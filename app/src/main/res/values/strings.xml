@@ -8,9 +8,9 @@
     <string name="label_name">Label Name</string>
     <string name="label_username">Label Username</string>
     <string name="share">Share</string>
-    <string name="label_followers">Followers :</string>
+    <string name="label_followers">Followers : </string>
     <string name="value_followers">Value Followers</string>
-    <string name="label_followings">Followings :</string>
+    <string name="label_followings">Followings : </string>
     <string name="value_followings">Value Followings</string>
     <string name="value_company">Company Name</string>
     <string name="label_company">Company : </string>
@@ -21,11 +21,19 @@
     <string name="cd_total_followers_and_following">Total Followers and Following</string>
     <string name="detail_users_title">Detail User</string>
     <string name="loading">Loading</string>
-    <string name="empty_value" translatable="false">-</string>
+    <string name="empty_value" translatable="false">" - "</string>
     <string name="error">Error Ocurred</string>
     <string name="title_follower">Follower</string>
     <string name="title_following">Following</string>
     <string name="default_user" translatable="false">rsdiz</string>
-    <string name="nodata_following">isn\'t following anybody</string>
-    <string name="nodata_follower">has no follower yet.</string>
+    <string name="nodata_following">" isn't following anybody"</string>
+    <string name="nodata_follower">" has no follower yet."</string>
+    <string name="label_bio" translatable="false">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...</string>
+    <string name="value_blog">Blog Link</string>
+    <string name="label_blog" translatable="false">Blog : </string>
+    <string name="label_email" translatable="false">Email : </string>
+    <string name="value_email" translatable="false">email@domain</string>
+    <string name="label_twitter" translatable="false">Twitter : </string>
+    <string name="value_twitter">Twitter Username</string>
+    <string name="share_text">Hi, I found a Github user with the username %1$s. It has %2$d repositories, %3$d followers, and %4$d following. Very great, right? I found his profile through the Explore Github User Application. Come on, try the application too.</string>
 </resources>

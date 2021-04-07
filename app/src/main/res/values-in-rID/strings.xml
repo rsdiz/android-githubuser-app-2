@@ -27,4 +27,7 @@
     <string name="title_following">Mengikuti</string>
     <string name="nodata_following">" tidak mengikuti siapapun"</string>
     <string name="nodata_follower">" tidak mempunyai pengikut saat ini"</string>
+    <string name="value_blog">Link Blog</string>
+    <string name="value_twitter">Nama Pengguna Twitter</string>
+    <string name="share_text">Hai, Saya menemukan seorang pengguna Github dengan username %1$s. Dia mempunyai %2$d repositori, %3$d pengikut, dan %4$d mengikuti. Sangat hebat bukan? Saya menemukan profilnya melalui Aplikasi Explore Github User. Yuk, coba juga aplikasinya.</string>
 </resources>

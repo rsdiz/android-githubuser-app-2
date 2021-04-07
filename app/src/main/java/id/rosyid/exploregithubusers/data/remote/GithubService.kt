@@ -1,6 +1,5 @@
 package id.rosyid.exploregithubusers.data.remote
 
-import android.database.Observable
 import id.rosyid.exploregithubusers.BuildConfig
 import id.rosyid.exploregithubusers.data.entities.*
 import retrofit2.Response

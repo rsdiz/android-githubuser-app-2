@@ -3,7 +3,6 @@ package id.rosyid.exploregithubusers.ui.explore
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
-import id.rosyid.exploregithubusers.R
 import id.rosyid.exploregithubusers.databinding.ActivityExploreBinding
 
 @AndroidEntryPoint

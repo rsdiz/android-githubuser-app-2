@@ -35,7 +35,11 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
         savedInstanceState: Bundle?
     ): View {
         binding = UsersFragmentBinding.inflate(inflater, container, false)
+        setAppBar()
+        return binding.root
+    }
 
+    private fun setAppBar() {
         val baseActivity = activity as AppCompatActivity
         val navHostFragment: NavHostFragment =
             baseActivity.supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -44,8 +48,6 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
         setHasOptionsMenu(true)
-
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,19 +74,14 @@ class UsersFragment : Fragment(), UsersAdapter.UserItemListener, MenuItem.OnActi
         viewModel.usersObserver(viewLifecycleOwner) { data, status, _ ->
             when (status) {
                 Resource.Status.SUCCESS -> {
-                    Log.d("OBSERVER", "setupObservers: Success: ${data?.size}")
                     if (!data.isNullOrEmpty()) {
                         adapter.setItems(ArrayList(data))
                         showLoading(false)
                         viewModel.removeUsersObserver(viewLifecycleOwner)
                     }
                 }
-                Resource.Status.ERROR -> {
-                    showError(true)
-                }
-                Resource.Status.LOADING -> {
-                    showLoading(true)
-                }
+                Resource.Status.ERROR -> showError(true)
+                Resource.Status.LOADING -> showLoading(true)
             }
         }
     }

@@ -1,6 +1,5 @@
 package id.rosyid.exploregithubusers.ui.explore.users
 
-import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

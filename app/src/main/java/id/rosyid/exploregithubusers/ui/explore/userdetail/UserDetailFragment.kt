@@ -1,21 +1,12 @@
 package id.rosyid.exploregithubusers.ui.explore.userdetail
 
 import android.content.Intent
-import android.content.res.Configuration
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.*
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -33,7 +24,6 @@ import id.rosyid.exploregithubusers.databinding.UserDetailFragmentBinding
 import id.rosyid.exploregithubusers.ui.explore.follow.FollowFragment
 import id.rosyid.exploregithubusers.utils.Resource
 import id.rosyid.exploregithubusers.utils.autoCleared
-import java.lang.IllegalArgumentException
 import kotlin.math.abs
 
 @AndroidEntryPoint
@@ -44,6 +34,7 @@ class UserDetailFragment : Fragment() {
     private lateinit var baseActivity: AppCompatActivity
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var dataUsername: String
+    private lateinit var intentShare: Intent
 
     companion object {
         @StringRes
@@ -64,6 +55,7 @@ class UserDetailFragment : Fragment() {
 
         setAppBar()
         setTabLayout()
+        binding.fabShare.setOnClickListener { performShareUser() }
 
         return binding.root
     }
@@ -101,6 +93,21 @@ class UserDetailFragment : Fragment() {
         when (status) {
             Resource.Status.SUCCESS -> {
                 if (userDetailResponse != null) {
+                    intentShare = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(
+                            Intent.EXTRA_TEXT,
+                            resources.getString(
+                                R.string.share_text,
+                                userDetailResponse.username,
+                                userDetailResponse.repositories,
+                                userDetailResponse.followers,
+                                userDetailResponse.following
+                            )
+                        )
+                        type = "text/plain"
+                    }
+
                     binding.apply {
                         Glide.with(requireContext())
                             .load(Uri.parse(userDetailResponse.avatarUrl))
@@ -118,19 +125,21 @@ class UserDetailFragment : Fragment() {
                         userLocation.text =
                             userDetailResponse.location ?: getString(R.string.empty_value)
                         userRepository.text = userDetailResponse.repositories.toString()
+                        userBio.text = userDetailResponse.bio ?: getString(R.string.empty_value)
+                        userBlog.text = userDetailResponse.blog ?: getString(R.string.empty_value)
+                        userEmail.text = userDetailResponse.email ?: getString(R.string.empty_value)
+                        userTwitter.text = userDetailResponse.twitterUsername ?: getString(R.string.empty_value)
                     }
+
                     showLoading(false)
+
                     viewModel.removeUserDetailObserver(
                         viewLifecycleOwner, userDetailResponse.username
                     )
                 }
             }
-            Resource.Status.ERROR -> {
-                showError(true)
-            }
-            Resource.Status.LOADING -> {
-                showLoading(true)
-            }
+            Resource.Status.ERROR -> showError(true)
+            Resource.Status.LOADING -> showLoading(true)
         }
     }
 
@@ -178,17 +187,14 @@ class UserDetailFragment : Fragment() {
                 val settingIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
                 startActivity(settingIntent)
             }
-            R.id.share -> {
-                val sendIntent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, "")
-                    type = "text/plain"
-                }
-                val shareIntent = Intent.createChooser(sendIntent, null)
-                startActivity(shareIntent)
-            }
+            R.id.share -> performShareUser()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun performShareUser() {
+        val shareIntent = Intent.createChooser(intentShare, null)
+        startActivity(shareIntent)
     }
 
     private fun setupFAB(menu: Menu) {
