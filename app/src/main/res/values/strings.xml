@@ -25,5 +25,7 @@
     <string name="error">Error Ocurred</string>
     <string name="title_follower">Follower</string>
     <string name="title_following">Following</string>
-    <string name="default_user">rsdiz</string>
+    <string name="default_user" translatable="false">rsdiz</string>
+    <string name="nodata_following">isn\'t following anybody</string>
+    <string name="nodata_follower">has no follower yet.</string>
 </resources>

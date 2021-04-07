@@ -25,4 +25,6 @@
     <string name="error">Terjadi Kesalahan</string>
     <string name="title_follower">Pengikut</string>
     <string name="title_following">Mengikuti</string>
+    <string name="nodata_following">" tidak mengikuti siapapun"</string>
+    <string name="nodata_follower">" tidak mempunyai pengikut saat ini"</string>
 </resources>

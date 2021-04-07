@@ -1,5 +1,6 @@
 package id.rosyid.exploregithubusers.ui.explore.follow
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -83,25 +84,30 @@ class FollowFragment : Fragment() {
         when (type) {
             Type.FOLLOWER.ordinal -> {
                 viewModel.followersObserver(viewLifecycleOwner, username) { data, status ->
-                    onFollowersObserverFinish(data, status)
-                    if (status == Resource.Status.SUCCESS)
+                    onFollowersObserverFinish(data, status, username)
+                    if (!data.isNullOrEmpty() && status == Resource.Status.SUCCESS)
                         viewModel.removeFollowersObserver(viewLifecycleOwner, username)
                 }
             }
             Type.FOLLOWING.ordinal -> {
                 viewModel.followingObserver(viewLifecycleOwner, username) { data, status ->
-                    onFollowingObserverFinish(data, status)
-                    if (status == Resource.Status.SUCCESS)
+                    onFollowingObserverFinish(data, status, username)
+                    if (!data.isNullOrEmpty() && status == Resource.Status.SUCCESS)
                         viewModel.removeFollowingObserver(viewLifecycleOwner, username)
                 }
             }
         }
     }
 
-    private fun onFollowersObserverFinish(data: List<FollowersResponse>?, status: Resource.Status) {
+    private fun onFollowersObserverFinish(
+        data: List<FollowersResponse>?,
+        status: Resource.Status,
+        username: String
+    ) {
         when (status) {
             Resource.Status.SUCCESS -> {
                 if (!data.isNullOrEmpty()) (adapter as FollowersAdapter).setItems(ArrayList(data))
+                else showNoData(username, Type.FOLLOWER)
                 showLoading(false)
             }
             Resource.Status.ERROR -> {
@@ -113,10 +119,15 @@ class FollowFragment : Fragment() {
         }
     }
 
-    private fun onFollowingObserverFinish(data: List<FollowingResponse>?, status: Resource.Status) {
+    private fun onFollowingObserverFinish(
+        data: List<FollowingResponse>?,
+        status: Resource.Status,
+        username: String
+    ) {
         when (status) {
             Resource.Status.SUCCESS -> {
                 if (!data.isNullOrEmpty()) (adapter as FollowingAdapter).setItems(ArrayList(data))
+                else showNoData(username, Type.FOLLOWING)
                 showLoading(false)
             }
             Resource.Status.ERROR -> {
@@ -165,6 +176,24 @@ class FollowFragment : Fragment() {
                 loadingAnimation.visibility = View.VISIBLE
                 loadingText.visibility = View.VISIBLE
             }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showNoData(username: String, type: Type) {
+        when (type) {
+            Type.FOLLOWER -> {
+                binding.nodataText.text = username + resources.getString(R.string.nodata_follower)
+            }
+            Type.FOLLOWING -> {
+                binding.nodataText.text = username + resources.getString(R.string.nodata_following)
+            }
+        }
+
+        binding.apply {
+            recyclerView.visibility = View.GONE
+            nodataAnimation.visibility = View.VISIBLE
+            nodataText.visibility = View.VISIBLE
         }
     }
 }

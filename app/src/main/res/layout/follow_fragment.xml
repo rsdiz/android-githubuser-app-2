@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:nestedScrollingEnabled="false"
     android:orientation="vertical"
     tools:context=".ui.explore.follow.FollowFragment">
 
@@ -15,7 +16,7 @@
         android:layout_marginVertical="24dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/sleeping_404"
+        app:lottie_rawRes="@raw/error_animation"
         app:lottie_renderMode="automatic" />
 
     <TextView
@@ -25,6 +26,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/monda"
         android:text="@string/error"
+        android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -45,6 +47,30 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/monda"
         android:text="@string/loading"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/nodata_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:lottie_autoPlay="true"
+        android:visibility="gone"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/sleeping_404"
+        app:lottie_renderMode="automatic" />
+
+    <TextView
+        android:id="@+id/nodata_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/monda"
+        android:text="@string/nodata_following"
+        android:visibility="gone"
+        android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold" />
 
